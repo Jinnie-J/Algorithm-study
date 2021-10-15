@@ -1,16 +1,15 @@
-
-
 def dfs(L, s):
     global cnt
     if L == m:
-        for x in res:
-            print(x, end=' ')
+        for i in range(m):
+            print(res[i], end=' ')
         print()
         cnt += 1
+
     else:
         for i in range(s, n + 1):
             res[L] = i
-            dfs(L + 1, s + i)
+            dfs(L + 1, i + 1)
 
 
 n, m = map(int, input().split())
