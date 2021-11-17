@@ -1,51 +1,41 @@
+from collections import deque
+
 arr = [list(map(int, input())) for _ in range(4)]
+arr= deque(arr)
 k = int(input())
 
 
-def rot(index, d):
+def rotate(index, d):
     if d == 1:
-        l = arr[index][:-1]
-        r = arr[index][-1:]
-        arr[index] = r + l
-
-    else:
-        r = arr[index][:1]
-        l = arr[index][1:]
-        arr[index] = l + r
-
+        arr[i].insert(0, arr[i].pop())
+    elif d == -1:
+        arr[i].append(arr[i].popleft())
 
 for i in range(k):
-    a, b = map(int, input().split())
+    index, dir = map(int, input().split())
+    rotateArr = [[index-1,dir]]
 
-    rot(a - 1, b)
+    x= index-1
+    nowdir = dir
+    while x+1<=3:
+        if arr[x][2] != arr[x+1][6]:
+            nowdir = -nowdir
+            rotateArr.append([x+1,nowdir])
+        elif arr[x][2] == arr[x+1][6]:
+            break
+        x+=1
 
-    left = a - 1
-    right = a - 1
-    direction = b
-    while left > 0:
-        left -= 1
-        if arr[left][3] != arr[left + 1][7]:
-            if direction == 1:
-                direction = -1
-            else:
-                direction = 1
-            rot(left, direction)
+    x=index-1
+    while x-1>=0:
+        if arr[x][6]!=arr[x-1][2]:
+            nowdir = -nowdir
+            rotateArr.append([x-1,nowdir])
+        elif arr[x][6] == arr[x-1][2]:
+            break
+        x-=1
 
-    direction = b
-    while right < 3:
-        right += 1
-        if arr[right][7] != arr[right - 1][3]:
-            if direction == 1:
-                direction = -1
-            else:
-                direction = 1
-            rot(right, direction)
+    for x, dir in rotateArr:
+        rotate(x,dir)
 
-answer = 0
-score = 1
-for i in range(4):
-    if arr[i][0] == 1:
-        answer += score
-    score *= 2
 
-print(answer)
+print(arr[0][0]*1 + arr[1][0]*2 + arr[2][0]*4 + arr[3][0]*8)
