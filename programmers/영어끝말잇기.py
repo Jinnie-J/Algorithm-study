@@ -1,5 +1,4 @@
-
-#정확성 수정필요
+# 정확성 수정필요
 def solution(n, words):
     answer = []
 
@@ -30,3 +29,16 @@ def solution(n, words):
         answer = [0, 0]
 
     return answer
+
+
+# 간단한 코드
+def solution(n, words):
+    word_set = set([words[0]])
+    tmp = words[0]
+
+    for i in range(1, len(words)):
+        if (tmp[-1] != words[i][0]) or words[i] in word_set:
+            return [(i % n) + 1, (i // n) + 1]
+        word_set.add(words[i])
+        tmp = words[i]
+    return [0, 0]
